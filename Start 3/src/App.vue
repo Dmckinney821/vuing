@@ -1,44 +1,118 @@
 <template>
     <div class="container">
-        <app-header :quoteCount='quotes.length' :maxQuotes="maxQuotes"></app-header>
-        <app-new-quote @quoteAdded="newQuote"></app-new-quote>
-        <app-quote-grid :quotes="quotes" @quoteDeleted='deleteQuote'></app-quote-grid>
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <div class="alert alert-info">Info: Click on a quote to delete it</div>
+        <form>
+            <div class="row">
+                <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input
+                                type="text"
+                                id="firstName"
+                                class="form-control"
+                                :value='userData.firsName'
+                                @input='userData.firstName = $event.target.value'>
+                </div>
+                <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input
+                                type="text"
+                                id="lastName"
+                                class="form-control"
+                                :value='userData.lastName'
+                                @input='userData.lastName = $event.target.value'>
+                </div>
+                <div class="form-group">
+                        <label for="email">Email</label>
+                        <input
+                                type="text"
+                                id="email"
+                                class="form-control"
+                                :value='userData.email'
+                                @input='userData.email = $event.target.value'>
+                </div>
+                <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+                                type="text"
+                                id="email"
+                                class="form-control"
+                                :value='userData.password'
+                                @input='userData.password = $event.target.value'>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                            <button
+                                class="btn btn-primary"
+                                @click.prevent='submitted'>
+                                Submit!
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Exercise 1 -->
+                    <!-- Create a Signup Form where you retrieve the following Information -->
+                    <!-- Full Name (First Name + Last Name) -->
+                    <!-- Mail -->
+                    <!-- Password -->
+                    <!-- Store Data? Yes/No -->
+
+                    <!-- Exercise 2 -->
+                    <!-- Only display the Form if it has NOT been submitted -->
+                    <!-- Display the Data Summary ONCE the Form HAS been submitted -->
+
+                    <!-- Exercise 3 -->
+                    <!-- Edit the Example from above and create a custom "Full Name" Control -->
+                    <!-- which still holds the First Name and Last Name Input Field -->
+                </div>
+            </div>
+        </form>
+        <hr>
+        <div class="row" v-if='isSubmitted'>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Your Data</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Full Name: {{ userData.firstName }}  {{ userData.lastName }}</p>
+                        <p>Mail: {{ userData.email }}</p>
+                        <p>Password: {{ userData.password }}</p>
+                        <p>Store in Database?: </p>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <app-switch v-model='dataSwitch'></app-switch>
+        </div>
     </div>
+    
 </template>
 
 <script>
-    import QuoteGrid from './components/QuoteGrid.vue';
-    import NewQuote from './components/NewQuote.vue';
-    import Header from './components/Header.vue'
+    import Switch from './Switch.vue'
     export default {
-        data: function() {
+        data() {
             return {
-                quotes: [
-                    'Just a quote to see something'
-                ],
-                maxQuotes: 10
+                userData: {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    password: ''
+                },
+                dataSwitch: true,
+                isSubmitted: false
             }
         },
         methods: {
-            newQuote(quote) {
-                if (this.quotes.length >= this.maxQuotes) {
-                    return alert('please delete quotes first')
-                }
-                this.quotes.push(quote)
+            storeData() {
+                this.storeData = true
             },
-            deleteQuote(index) {
-                this.quotes.splice(index, 1);
+            submitted() {
+                this.isSubmitted = true
             }
         },
         components: {
-            appQuoteGrid: QuoteGrid,
-            appNewQuote: NewQuote,
-            appHeader: Header
+            appSwitch: Switch
         }
     }
 </script>
