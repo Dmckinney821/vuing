@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 
 axios.defaults.baseURL = 'https://last-for-today.firebaseio.com';
-axios.defaults.headers.common['Authorization'] = 'sjdf';
+// axios.defaults.headers.common['Authorization'] = 'sjdf';
 axios.defaults.headers.get['Accepts'] = 'application/json';
 
 
